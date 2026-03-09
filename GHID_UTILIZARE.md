@@ -251,7 +251,7 @@ Regiunea selectată apare în bara de stare: ex. `Region: (120, 80) 400×300`.
 ### Salvarea
 
 1. Apasă butonul **💾 Save** sau folosește **Ctrl+S**.
-2. Dacă macrooul nu a fost salvat anterior, se deschide un dialog de tip **„Salvează ca"** — alege un folder și un nume de fișier (extensia `.json` se adaugă automat).
+2. Dacă macroul nu a fost salvat anterior, se deschide un dialog de tip **„Salvează ca"** — alege un folder și un nume de fișier (extensia `.json` se adaugă automat).
 3. Fișierul este salvat în format JSON lizibil, conținând toate setările și pașii.
 
 ### Încărcarea
@@ -289,7 +289,7 @@ Taste rapide **în interiorul aplicației**:
 
 ## 12. Oprirea de urgență
 
-Dacă macrooul rulează și vrei să-l oprești imediat:
+Dacă macroul rulează și vrei să-l oprești imediat:
 
 1. Apasă **F10** de oriunde de pe calculator — oprire imediată.
 2. Sau apasă butonul **■ Stop** din interfață.
@@ -342,7 +342,7 @@ sudo apt install python3-xlib
 
 ---
 
-### ❌ Macrooul rulează prea repede / prea lent
+### ❌ Macroul rulează prea repede / prea lent
 
 **Soluție:** Ajustează câmpul **Speed** din bara de setări:
 - Valoare mai mică (ex. `0.5`) → mai lent
