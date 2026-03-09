@@ -2,6 +2,8 @@
 
 An advanced desktop macro recorder and player for Windows, written in Python.
 
+> 🇷🇴 **Ghid în română:** Vezi [GHID_UTILIZARE.md](GHID_UTILIZARE.md) pentru instrucțiuni pas cu pas în limba română.
+
 ## Features
 
 - **Record** mouse movements, clicks, scrolling, and keyboard actions
