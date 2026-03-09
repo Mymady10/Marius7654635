@@ -3,6 +3,30 @@
 
 ---
 
+## ⚡ Start Rapid (TL;DR)
+
+Dacă vrei să pornești aplicația cât mai repede, urmează acești **5 pași**:
+
+```bash
+# 1. Descarcă proiectul
+git clone https://github.com/Mymady10/Marius7654635.git
+
+# 2. Intră în folder
+cd Marius7654635
+
+# 3. Instalează dependințele
+pip install -r requirements.txt
+
+# 4. Pornește aplicația
+python app.py
+```
+
+> **5.** Fereastra **Macro Recorder** se deschide. Apasă **F8** pentru a începe înregistrarea. Gata!
+
+Dacă ai nevoie de mai multe detalii, consultă secțiunile de mai jos.
+
+---
+
 ## Cuprins
 
 1. [Cerințe preliminare](#1-cerinte-preliminare)
@@ -18,6 +42,7 @@
 11. [Taste rapide globale](#11-taste-rapide-globale)
 12. [Oprirea de urgență](#12-oprirea-de-urgenta)
 13. [Probleme frecvente](#13-probleme-frecvente)
+14. [Deschiderea paginii web (index.html)](#14-deschiderea-paginii-web-indexhtml)
 
 ---
 
@@ -347,6 +372,45 @@ sudo apt install python3-xlib
 **Soluție:** Ajustează câmpul **Speed** din bara de setări:
 - Valoare mai mică (ex. `0.5`) → mai lent
 - Valoare mai mare (ex. `2.0`) → mai rapid
+
+---
+
+## 14. Deschiderea paginii web (index.html)
+
+Proiectul conține și un fișier `index.html` — o pagină web personală. Nu necesită Python sau nicio instalare; se deschide direct în orice browser.
+
+### Pasul 1 — Localizează fișierul
+
+Navighează în folderul proiectului. Vei găsi fișierul `index.html` în rădăcina acestuia.
+
+### Pasul 2 — Deschide în browser
+
+**Metodă 1 — Dublu-clic:**
+Fă **dublu-clic** pe `index.html` din Explorer (Windows) sau Finder (macOS). Browserul implicit va deschide pagina automat.
+
+**Metodă 2 — Drag & Drop:**
+Trage fișierul `index.html` cu mouse-ul direct în fereastra browserului (Chrome, Firefox, Edge etc.).
+
+**Metodă 3 — Din terminal:**
+```bash
+# Windows
+start index.html
+
+# macOS
+open index.html
+
+# Linux
+xdg-open index.html
+```
+
+### Ce vei vedea
+
+Pagina afișează un profil personal cu:
+- O imagine de prezentare
+- Un video despre Liceul „Dante Alighieri" din Chișinău
+- O biografie personală
+
+> **Notă:** Pagina încarcă imagini și video de pe internet (YouTube, site-uri externe). Asigură-te că ai o conexiune activă la internet pentru a le vedea corect.
 
 ---
 
