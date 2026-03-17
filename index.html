@@ -8,6 +8,7 @@
 <body>
 <h1> Activitatile de zi cu zi </h1>
 <a class='buton'href='#video'>Video</a> 
+<a class='buton'href='#masina'>Mașină</a> 
 <p/>
 <img src='https://www.ziarulnational.md/getimages/0x0/large/0c900a69d575cce007e1d90981214617.jpg' width=640'><img>
 <h2 id='video'>Liceul unde studiez "Dante Alighieri"</h2>
@@ -15,6 +16,211 @@
 clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
 <a id='buton2' href='#'>poză</a>
+
+<h2 id='masina'>Mașină pe drum</h2>
+<canvas id="carCanvas" width="717" height="300"></canvas>
+
+<script>
+(function() {
+  var canvas = document.getElementById('carCanvas');
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+
+  // Car position
+  var carX = -160;
+  var carY = H * 0.58;
+  var speed = 2.5;
+
+  // Cloud positions
+  var clouds = [
+    {x: 80,  y: 50,  w: 90, h: 40},
+    {x: 300, y: 30,  w: 120, h: 50},
+    {x: 540, y: 55,  w: 80,  h: 35}
+  ];
+
+  // Road dash offset for animation
+  var dashOffset = 0;
+
+  function drawSky() {
+    var sky = ctx.createLinearGradient(0, 0, 0, H * 0.65);
+    sky.addColorStop(0, '#87CEEB');
+    sky.addColorStop(1, '#d0eeff');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H * 0.65);
+  }
+
+  function drawCloud(cx, cy, cw, ch) {
+    ctx.save();
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, cw * 0.5, ch * 0.5, 0, 0, Math.PI * 2);
+    ctx.ellipse(cx - cw * 0.25, cy + ch * 0.1, cw * 0.35, ch * 0.4, 0, 0, Math.PI * 2);
+    ctx.ellipse(cx + cw * 0.25, cy + ch * 0.1, cw * 0.35, ch * 0.4, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawGround() {
+    var ground = ctx.createLinearGradient(0, H * 0.65, 0, H);
+    ground.addColorStop(0, '#7ec850');
+    ground.addColorStop(1, '#5aaa30');
+    ctx.fillStyle = ground;
+    ctx.fillRect(0, H * 0.65, W, H * 0.35);
+  }
+
+  function drawRoad() {
+    // Road surface
+    ctx.fillStyle = '#555';
+    ctx.fillRect(0, H * 0.68, W, H * 0.22);
+
+    // Road edges (white lines)
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, H * 0.68);
+    ctx.lineTo(W, H * 0.68);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, H * 0.90);
+    ctx.lineTo(W, H * 0.90);
+    ctx.stroke();
+
+    // Dashed center line
+    ctx.save();
+    ctx.strokeStyle = '#FFD700';
+    ctx.lineWidth = 4;
+    ctx.setLineDash([40, 25]);
+    ctx.lineDashOffset = -dashOffset;
+    ctx.beginPath();
+    ctx.moveTo(0, H * 0.79);
+    ctx.lineTo(W, H * 0.79);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawCar(x, y) {
+    // Shadow
+    ctx.save();
+    ctx.fillStyle = 'rgba(0,0,0,0.18)';
+    ctx.beginPath();
+    ctx.ellipse(x + 70, y + 68, 75, 12, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Body
+    ctx.fillStyle = '#C0392B';
+    ctx.beginPath();
+    ctx.roundRect(x, y + 30, 140, 38, 6);
+    ctx.fill();
+
+    // Cabin
+    ctx.fillStyle = '#E74C3C';
+    ctx.beginPath();
+    ctx.moveTo(x + 25, y + 30);
+    ctx.lineTo(x + 35, y + 5);
+    ctx.lineTo(x + 105, y + 5);
+    ctx.lineTo(x + 115, y + 30);
+    ctx.closePath();
+    ctx.fill();
+
+    // Windows
+    ctx.fillStyle = '#AED6F1';
+    ctx.beginPath();
+    ctx.moveTo(x + 38, y + 28);
+    ctx.lineTo(x + 43, y + 10);
+    ctx.lineTo(x + 68, y + 10);
+    ctx.lineTo(x + 68, y + 28);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(x + 72, y + 28);
+    ctx.lineTo(x + 72, y + 10);
+    ctx.lineTo(x + 100, y + 10);
+    ctx.lineTo(x + 108, y + 28);
+    ctx.closePath();
+    ctx.fill();
+
+    // Wheels
+    ctx.fillStyle = '#222';
+    ctx.beginPath();
+    ctx.arc(x + 30, y + 68, 18, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(x + 110, y + 68, 18, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Wheel rims
+    ctx.fillStyle = '#bbb';
+    ctx.beginPath();
+    ctx.arc(x + 30, y + 68, 9, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(x + 110, y + 68, 9, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Headlight
+    ctx.fillStyle = '#FFFACD';
+    ctx.beginPath();
+    ctx.roundRect(x + 130, y + 38, 14, 10, 3);
+    ctx.fill();
+
+    // Tail light
+    ctx.fillStyle = '#922B21';
+    ctx.beginPath();
+    ctx.roundRect(x - 4, y + 38, 10, 10, 3);
+    ctx.fill();
+  }
+
+  function drawTrees() {
+    var positions = [60, 200, 380, 520, 660];
+    positions.forEach(function(px) {
+      // Trunk
+      ctx.fillStyle = '#8B5E3C';
+      ctx.fillRect(px - 5, H * 0.52, 10, H * 0.14);
+      // Canopy
+      ctx.fillStyle = '#27AE60';
+      ctx.beginPath();
+      ctx.arc(px, H * 0.47, 28, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#2ECC71';
+      ctx.beginPath();
+      ctx.arc(px - 12, H * 0.50, 20, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(px + 12, H * 0.50, 20, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+
+    drawSky();
+
+    // Animate clouds
+    clouds.forEach(function(c) {
+      c.x -= 0.3;
+      if (c.x + c.w < 0) c.x = W + c.w;
+      drawCloud(c.x, c.y, c.w, c.h);
+    });
+
+    drawTrees();
+    drawGround();
+    drawRoad();
+
+    dashOffset = (dashOffset + speed) % 65;
+
+    drawCar(carX, carY - 68);
+
+    carX += speed;
+    if (carX > W + 20) carX = -160;
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+})();
+</script>
 
 <h3>Biografie personală</h3>
 <div class='text'>
@@ -44,6 +250,7 @@ Toate drepturile sunt rezervate 2022. Eu în rețele de socializare: Instagram: 
 <style>
 
 iframe, img {border:10px solid #fff; border-radius:10px;}
+#carCanvas {border:10px solid #fff; border-radius:10px; display:block; margin:0 auto;}
 html{scroll-behavior:smooth; transition: ease 3s;}
 .ontop{position:fixed; background:#F22613; color:#fff; bottom:80px; right:20px; padding:8px; border-radius:5px; width:20px;}
 .ontop:hover{background:#333;}
