@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mașină în mișcare</title>
+  <style>
+    body {
+      margin: 0;
+      background: #87CEEB;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    canvas {
+      border: 3px solid #333;
+      border-radius: 12px;
+      background: #87CEEB;
+      display: block;
+    }
+    .controls {
+      margin-top: 14px;
+      display: flex;
+      gap: 12px;
+    }
+    button {
+      padding: 8px 22px;
+      font-size: 15px;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      background: #C0392B;
+      color: #fff;
+      transition: background 0.2s;
+    }
+    button:hover { background: #333; }
+    label {
+      font-size: 15px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚗 Mașină în mișcare</h1>
+  <canvas id="scene" width="800" height="260"></canvas>
+  <div class="controls">
+    <button id="btnToggle">Pauză</button>
+    <label>
+      Viteză:
+      <input id="speedRange" type="range" min="1" max="10" value="3" />
+    </label>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('scene');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width;
+    const H = canvas.height;
+
+    let running = true;
+    let speed = 3;
+    let carX = -160;
+
+    // Road markings offset (animates with road)
+    let dashOffset = 0;
+
+    document.getElementById('btnToggle').addEventListener('click', function () {
+      running = !running;
+      this.textContent = running ? 'Pauză' : 'Continuă';
+      if (running) requestAnimationFrame(loop);
+    });
+
+    document.getElementById('speedRange').addEventListener('input', function () {
+      speed = Number(this.value);
+    });
+
+    function drawSky() {
+      const grad = ctx.createLinearGradient(0, 0, 0, H * 0.55);
+      grad.addColorStop(0, '#5ba8e8');
+      grad.addColorStop(1, '#c9e8fa');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H * 0.55);
+    }
+
+    function drawSun() {
+      ctx.beginPath();
+      ctx.arc(700, 45, 32, 0, Math.PI * 2);
+      ctx.fillStyle = '#FFD700';
+      ctx.fill();
+    }
+
+    function drawCloud(x, y) {
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      ctx.beginPath(); ctx.arc(x,      y,     22, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath(); ctx.arc(x + 28, y - 8, 28, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath(); ctx.arc(x + 56, y,     22, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function drawGround() {
+      // Grass
+      ctx.fillStyle = '#4caf50';
+      ctx.fillRect(0, H * 0.55, W, H * 0.45);
+      // Road
+      ctx.fillStyle = '#555';
+      ctx.fillRect(0, H * 0.60, W, H * 0.30);
+      // Road edge lines
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(0, H * 0.60);
+      ctx.lineTo(W, H * 0.60);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, H * 0.90);
+      ctx.lineTo(W, H * 0.90);
+      ctx.stroke();
+    }
+
+    function drawDashes() {
+      // Center dashes animated
+      ctx.strokeStyle = '#FFD700';
+      ctx.lineWidth = 4;
+      ctx.setLineDash([40, 30]);
+      ctx.lineDashOffset = -dashOffset;
+      ctx.beginPath();
+      ctx.moveTo(0, H * 0.75);
+      ctx.lineTo(W, H * 0.75);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function drawCar(x) {
+      const y = H * 0.62; // base of car body
+
+      // Shadow
+      ctx.fillStyle = 'rgba(0,0,0,0.18)';
+      ctx.beginPath();
+      ctx.ellipse(x + 75, H * 0.895, 70, 10, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Body
+      ctx.fillStyle = '#C0392B';
+      ctx.beginPath();
+      ctx.roundRect(x, y + 30, 150, 48, 8);
+      ctx.fill();
+
+      // Cabin / roof
+      ctx.fillStyle = '#E74C3C';
+      ctx.beginPath();
+      ctx.moveTo(x + 30, y + 30);
+      ctx.lineTo(x + 45, y + 5);
+      ctx.lineTo(x + 108, y + 5);
+      ctx.lineTo(x + 122, y + 30);
+      ctx.closePath();
+      ctx.fill();
+
+      // Windows
+      ctx.fillStyle = '#AED6F1';
+      ctx.strokeStyle = '#555';
+      ctx.lineWidth = 1.5;
+      // Left window
+      ctx.beginPath();
+      ctx.moveTo(x + 34, y + 28);
+      ctx.lineTo(x + 48, y + 8);
+      ctx.lineTo(x + 76, y + 8);
+      ctx.lineTo(x + 76, y + 28);
+      ctx.closePath();
+      ctx.fill(); ctx.stroke();
+      // Right window
+      ctx.beginPath();
+      ctx.moveTo(x + 80, y + 28);
+      ctx.lineTo(x + 80, y + 8);
+      ctx.lineTo(x + 106, y + 8);
+      ctx.lineTo(x + 118, y + 28);
+      ctx.closePath();
+      ctx.fill(); ctx.stroke();
+
+      // Wheels (rotating)
+      const wheelY = y + 78;
+      const angle = (carX / -18) % (Math.PI * 2); // rotation angle
+      drawWheel(x + 30, wheelY, 18, angle);
+      drawWheel(x + 118, wheelY, 18, angle);
+
+      // Headlight
+      ctx.fillStyle = '#FFFDE7';
+      ctx.strokeStyle = '#aaa';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.ellipse(x + 148, y + 52, 6, 8, 0, 0, Math.PI * 2);
+      ctx.fill(); ctx.stroke();
+
+      // Tail light
+      ctx.fillStyle = '#C0392B';
+      ctx.strokeStyle = '#800';
+      ctx.beginPath();
+      ctx.ellipse(x + 3, y + 52, 5, 7, 0, 0, Math.PI * 2);
+      ctx.fill(); ctx.stroke();
+    }
+
+    function drawWheel(cx, cy, r, angle) {
+      // Tyre
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#222';
+      ctx.fill();
+      // Hub
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * 0.45, 0, Math.PI * 2);
+      ctx.fillStyle = '#aaa';
+      ctx.fill();
+      // Spokes
+      ctx.strokeStyle = '#888';
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 4; i++) {
+        const a = angle + (i * Math.PI) / 2;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.cos(a) * r * 0.85, cy + Math.sin(a) * r * 0.85);
+        ctx.stroke();
+      }
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, W, H);
+
+      drawSky();
+      drawSun();
+      drawCloud(80, 55);
+      drawCloud(350, 35);
+      drawCloud(570, 65);
+      drawGround();
+      drawDashes();
+      drawCar(carX);
+
+      if (running) {
+        carX += speed;
+        dashOffset += speed;
+        if (carX > W + 10) carX = -160;
+        requestAnimationFrame(loop);
+      }
+    }
+
+    // Polyfill roundRect for older browsers
+    if (!CanvasRenderingContext2D.prototype.roundRect) {
+      CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+        this.beginPath();
+        this.moveTo(x + r, y);
+        this.lineTo(x + w - r, y);
+        this.quadraticCurveTo(x + w, y, x + w, y + r);
+        this.lineTo(x + w, y + h - r);
+        this.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+        this.lineTo(x + r, y + h);
+        this.quadraticCurveTo(x, y + h, x, y + h - r);
+        this.lineTo(x, y + r);
+        this.quadraticCurveTo(x, y, x + r, y);
+        this.closePath();
+      };
+    }
+
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
