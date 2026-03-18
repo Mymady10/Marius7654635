@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <RootNamespace>SmartAuto</RootNamespace>
+    <AssemblyName>SmartAuto</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>12.0</LangVersion>
+    <OutputType>WinExe</OutputType>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PublishProfile>Properties\PublishProfiles\win10-x64.pubxml</PublishProfile>
+    <DefaultLanguage>en-US</DefaultLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartAuto.Abstractions\SmartAuto.Abstractions.csproj" />
+    <ProjectReference Include="..\SmartAuto.Domain\SmartAuto.Domain.csproj" />
+    <ProjectReference Include="..\SmartAuto.Application\SmartAuto.Application.csproj" />
+    <ProjectReference Include="..\SmartAuto.Infrastructure\SmartAuto.Infrastructure.csproj" />
+    <ProjectReference Include="..\SmartAuto.Common\SmartAuto.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.Sinks.File" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="Serilog.Extensions.Hosting" />
+  </ItemGroup>
+</Project>

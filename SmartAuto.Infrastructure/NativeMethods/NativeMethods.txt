@@ -1,0 +1,57 @@
+# Win32 P/Invoke API declarations used by SmartAuto via CsWin32 source generator.
+# See: https://microsoft.github.io/CsWin32/
+
+# Global hooks
+SetWindowsHookEx
+UnhookWindowsHookEx
+CallNextHookEx
+
+# Input simulation (SendInput – never SendKeys/InputSimulator)
+SendInput
+MapVirtualKey
+MapVirtualKeyEx
+VkKeyScan
+VkKeyScanEx
+
+# Window and process info
+GetForegroundWindow
+GetWindowText
+GetWindowTextLength
+GetWindowThreadProcessId
+GetClassName
+GetWindowRect
+IsWindow
+IsWindowVisible
+SetForegroundWindow
+BringWindowToTop
+
+# Hotkey registration
+RegisterHotKey
+UnregisterHotKey
+
+# UAC / admin detection
+IsUserAnAdmin
+ShellExecute
+
+# DPI / display
+GetDpiForMonitor
+GetDpiForWindow
+MonitorFromWindow
+MonitorFromPoint
+GetMonitorInfo
+
+# Cursor position
+GetCursorPos
+SetCursorPos
+
+# Message pump
+GetMessage
+TranslateMessage
+DispatchMessage
+PostQuitMessage
+PostThreadMessage
+PeekMessage
+
+# Misc
+GetSystemMetrics
+GetTickCount64

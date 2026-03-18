@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="SmartAuto.Views.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      AutomationProperties.Name="Settings Page">
+    <ScrollViewer Padding="24">
+        <StackPanel Spacing="16" MaxWidth="500" HorizontalAlignment="Left">
+            <TextBlock Text="Settings"
+                       Style="{ThemeResource TitleLargeTextBlockStyle}"
+                       AutomationProperties.HeadingLevel="Level1"/>
+
+            <NumberBox Header="Default retry count"
+                       Value="{x:Bind ViewModel.DefaultRetryCount, Mode=TwoWay}"
+                       Minimum="0" Maximum="10" SpinButtonPlacementMode="Inline"
+                       AutomationProperties.Name="Default retry count"/>
+
+            <NumberBox Header="Default timeout (seconds)"
+                       Value="{x:Bind ViewModel.DefaultTimeoutSeconds, Mode=TwoWay}"
+                       Minimum="1" Maximum="300" SpinButtonPlacementMode="Inline"
+                       AutomationProperties.Name="Default action timeout in seconds"/>
+
+            <ToggleSwitch Header="Show debug overlay before each action"
+                          IsOn="{x:Bind ViewModel.ShowDebugOverlay, Mode=TwoWay}"
+                          AutomationProperties.Name="Show debug overlay toggle"/>
+
+            <ToggleSwitch Header="Opt-in to anonymous usage telemetry"
+                          IsOn="{x:Bind ViewModel.OptInTelemetry, Mode=TwoWay}"
+                          AutomationProperties.Name="Opt in to telemetry toggle"/>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

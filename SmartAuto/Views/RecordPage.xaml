@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="SmartAuto.Views.RecordPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SmartAuto.Views"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    AutomationProperties.Name="Record Page">
+
+    <ScrollViewer Padding="24">
+        <StackPanel Spacing="16" MaxWidth="700" HorizontalAlignment="Left">
+
+            <!-- Page title -->
+            <TextBlock Text="Record Actions"
+                       Style="{ThemeResource TitleLargeTextBlockStyle}"
+                       AutomationProperties.HeadingLevel="Level1"/>
+
+            <TextBlock Text="Use the buttons below to start and stop recording your desktop actions."
+                       Style="{ThemeResource BodyTextBlockStyle}"
+                       TextWrapping="Wrap"/>
+
+            <!-- Status banner -->
+            <InfoBar x:Name="StatusInfoBar"
+                     IsOpen="{x:Bind ViewModel.IsRecording, Mode=OneWay}"
+                     Severity="Informational"
+                     Title="Recording in progress"
+                     Message="Perform actions on your desktop. Press Stop when done."/>
+
+            <!-- Control buttons -->
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <Button x:Name="StartButton"
+                        Content="Start Recording"
+                        Style="{ThemeResource AccentButtonStyle}"
+                        MinWidth="160" Padding="16,12"
+                        IsEnabled="{x:Bind ViewModel.CanStartRecording, Mode=OneWay}"
+                        Command="{x:Bind ViewModel.StartRecordingCommand}"
+                        AutomationProperties.Name="Start recording desktop actions">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE720;" FontSize="16"/>
+                            <TextBlock Text="Start Recording"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+                <Button x:Name="StopButton"
+                        MinWidth="160" Padding="16,12"
+                        IsEnabled="{x:Bind ViewModel.CanStopRecording, Mode=OneWay}"
+                        Command="{x:Bind ViewModel.StopRecordingCommand}"
+                        AutomationProperties.Name="Stop recording desktop actions">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE71A;" FontSize="16"/>
+                            <TextBlock Text="Stop Recording"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+
+            <!-- Status message -->
+            <TextBlock Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
+                       Style="{ThemeResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+
+            <!-- Event log -->
+            <TextBlock Text="Captured Events" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+            <ListView ItemsSource="{x:Bind ViewModel.EventLog, Mode=OneWay}"
+                      Height="300"
+                      SelectionMode="None"
+                      IsItemClickEnabled="False"
+                      AutomationProperties.Name="Captured events list">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" Style="{ThemeResource CaptionTextBlockStyle}"
+                                   FontFamily="Consolas" TextWrapping="NoWrap"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="SmartAuto.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SmartAuto"
+    Activated="MainWindow_Activated">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- NavigationView with top AppBar -->
+        <NavigationView
+            x:Name="NavView"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            IsTabStop="False"
+            SelectionChanged="NavView_SelectionChanged"
+            IsSettingsVisible="True"
+            PaneDisplayMode="Left"
+            IsPaneToggleButtonVisible="True"
+            IsBackButtonVisible="Auto"
+            OpenPaneLength="220"
+            CompactPaneLength="48">
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem Tag="Record"       Icon="Video"      Content="Record"        AutomationProperties.Name="Record automation actions"/>
+                <NavigationViewItem Tag="ScriptEditor" Icon="Edit"       Content="Script Editor" AutomationProperties.Name="Edit automation script"/>
+                <NavigationViewItem Tag="RunDebug"     Icon="Play"       Content="Run &amp; Debug" AutomationProperties.Name="Run and debug script"/>
+                <NavigationViewItem Tag="Library"      Icon="Library"    Content="Library"       AutomationProperties.Name="Script library"/>
+            </NavigationView.MenuItems>
+
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Tag="Settings" Icon="Setting" Content="Settings" AutomationProperties.Name="Application settings"/>
+            </NavigationView.FooterMenuItems>
+
+            <!-- Main content frame -->
+            <Frame x:Name="ContentFrame" Margin="0,48,0,0"/>
+        </NavigationView>
+    </Grid>
+</Window>

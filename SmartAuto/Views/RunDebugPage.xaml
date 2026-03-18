@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="SmartAuto.Views.RunDebugPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    AutomationProperties.Name="Run and Debug Page">
+
+    <ScrollViewer Padding="24">
+        <StackPanel Spacing="16" MaxWidth="700" HorizontalAlignment="Left">
+
+            <TextBlock Text="Run &amp; Debug"
+                       Style="{ThemeResource TitleLargeTextBlockStyle}"
+                       AutomationProperties.HeadingLevel="Level1"/>
+
+            <!-- Progress bar -->
+            <ProgressBar Value="{x:Bind ViewModel.ProgressPercent, Mode=OneWay}"
+                         Maximum="100" Height="6"
+                         Visibility="{x:Bind ViewModel.IsRunning, Mode=OneWay}"
+                         AutomationProperties.Name="Script execution progress"/>
+
+            <!-- Controls -->
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <Button Style="{ThemeResource AccentButtonStyle}"
+                        MinWidth="120" Padding="16,12"
+                        Command="{x:Bind ViewModel.RunScriptCommand}"
+                        IsEnabled="{x:Bind ViewModel.CanRun, Mode=OneWay}"
+                        AutomationProperties.Name="Run script">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <FontIcon Glyph="&#xE768;" FontSize="16"/>
+                        <TextBlock Text="Run"/>
+                    </StackPanel>
+                </Button>
+
+                <Button MinWidth="120" Padding="16,12"
+                        Command="{x:Bind ViewModel.StopScriptCommand}"
+                        IsEnabled="{x:Bind ViewModel.CanStop, Mode=OneWay}"
+                        AutomationProperties.Name="Stop script">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <FontIcon Glyph="&#xE71A;" FontSize="16"/>
+                        <TextBlock Text="Stop"/>
+                    </StackPanel>
+                </Button>
+
+                <Button MinWidth="120" Padding="16,12"
+                        Command="{x:Bind ViewModel.PauseOrResumeCommand}"
+                        AutomationProperties.Name="Pause or resume script">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <FontIcon Glyph="&#xE769;" FontSize="16"/>
+                        <TextBlock Text="Pause/Resume"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <!-- Status -->
+            <TextBlock Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
+                       Style="{ThemeResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+
+            <!-- Log output -->
+            <TextBlock Text="Execution Log" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+            <ScrollViewer MaxHeight="400" HorizontalScrollMode="Auto">
+                <TextBlock Text="{x:Bind ViewModel.LogOutput, Mode=OneWay}"
+                           FontFamily="Consolas"
+                           Style="{ThemeResource CaptionTextBlockStyle}"
+                           TextWrapping="Wrap"/>
+            </ScrollViewer>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>
