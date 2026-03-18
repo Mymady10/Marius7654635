@@ -1,0 +1,14 @@
+<Project>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <LangVersion>12</LangVersion>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <Authors>SmartAuto Contributors</Authors>
+    <Company>SmartAuto</Company>
+    <Copyright>Copyright © 2026 SmartAuto</Copyright>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+</Project>

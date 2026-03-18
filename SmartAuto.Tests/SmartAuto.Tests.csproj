@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>SmartAuto.Tests</RootNamespace>
+    <AssemblyName>SmartAuto.Tests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="coverlet.collector" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SmartAuto.Abstractions\SmartAuto.Abstractions.csproj" />
+    <ProjectReference Include="..\SmartAuto.Domain\SmartAuto.Domain.csproj" />
+    <ProjectReference Include="..\SmartAuto.Application\SmartAuto.Application.csproj" />
+    <ProjectReference Include="..\SmartAuto.Common\SmartAuto.Common.csproj" />
+  </ItemGroup>
+</Project>

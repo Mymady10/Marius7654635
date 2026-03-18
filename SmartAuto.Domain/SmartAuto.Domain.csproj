@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>SmartAuto.Domain</RootNamespace>
+    <AssemblyName>SmartAuto.Domain</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="JsonSchema.Net" />
+    <PackageReference Include="Polly" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SmartAuto.Abstractions\SmartAuto.Abstractions.csproj" />
+    <ProjectReference Include="..\SmartAuto.Common\SmartAuto.Common.csproj" />
+  </ItemGroup>
+</Project>

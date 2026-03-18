@@ -1,0 +1,60 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- UI toolkit -->
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+
+    <!-- Logging -->
+    <PackageVersion Include="Serilog" Version="4.1.0" />
+    <PackageVersion Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageVersion Include="Serilog.Sinks.Console" Version="4.1.1" />
+    <PackageVersion Include="Serilog.Extensions.Hosting" Version="8.0.0" />
+
+    <!-- Resilience -->
+    <PackageVersion Include="Polly" Version="8.4.2" />
+
+    <!-- UI Automation -->
+    <PackageVersion Include="FlaUI.Core" Version="4.0.0" />
+    <PackageVersion Include="FlaUI.UIA3" Version="4.0.0" />
+
+    <!-- Computer Vision -->
+    <PackageVersion Include="OpenCvSharp4" Version="4.9.0.20240103" />
+    <PackageVersion Include="OpenCvSharp4.runtime.win" Version="4.9.0.20240103" />
+
+    <!-- OCR -->
+    <PackageVersion Include="Tesseract" Version="5.2.0" />
+
+    <!-- Microsoft Extensions -->
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+
+    <!-- JSON / Schema -->
+    <PackageVersion Include="System.Text.Json" Version="8.0.5" />
+    <PackageVersion Include="JsonSchema.Net" Version="7.3.4" />
+
+    <!-- Dynamic expressions -->
+    <PackageVersion Include="DynamicExpresso.Core" Version="2.16.1" />
+
+    <!-- WinUI / Windows App SDK -->
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.6.250205007" />
+    <PackageVersion Include="Microsoft.Windows.CsWin32" Version="0.3.106-beta" />
+
+    <!-- Code analysis -->
+    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" />
+
+    <!-- Testing -->
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageVersion Include="xunit" Version="2.9.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageVersion Include="Moq" Version="4.20.72" />
+    <PackageVersion Include="FluentAssertions" Version="6.12.0" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.2" />
+  </ItemGroup>
+</Project>
