@@ -1,0 +1,52 @@
+## .NET / Visual Studio
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+TestResults/
+*.nupkg
+*.snupkg
+*.appx
+*.msix
+*.msixbundle
+AppPackages/
+BundleArtifacts/
+Package.StoreAssociation.xml
+_pkginfo.txt
+*.appxsym
+
+## Build artifacts
+artifacts/
+publish/
+dist/
+
+## NuGet
+packages/
+*.lock.json
+!packages.lock.json
+nuget.config.local
+
+## OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+## Rider / JetBrains
+.idea/
+*.sln.iml
+
+## Temporary files
+*.tmp
+*.temp
+*~
+
+## Coverage
+coverage/
+*.coverage
+*.coveragexml
+lcov.info
