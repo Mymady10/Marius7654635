@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instrumente de măsurat digitale și reguli de utilizare</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-dark:  #1a3a6b;
+      --blue-mid:   #2563b0;
+      --blue-light: #4a90d9;
+      --blue-pale:  #dbeafe;
+      --grey-dark:  #374151;
+      --grey-mid:   #6b7280;
+      --grey-light: #e5e7eb;
+      --white:      #ffffff;
+      --accent:     #f59e0b;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      font-family: 'Roboto', sans-serif;
+      background: #1e2a3a;
+      overflow: hidden;
+    }
+
+    /* ── Slideshow container ── */
+    .slides-wrapper {
+      position: relative;
+      width: 100vw; height: 100vh;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+    }
+    .slide.active { display: flex; }
+
+    /* ── Navigation bar ── */
+    .nav-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 56px;
+      background: rgba(26, 58, 107, 0.95);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 100;
+    }
+    .nav-bar button {
+      background: var(--blue-mid);
+      color: var(--white);
+      border: none;
+      padding: 8px 22px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .nav-bar button:hover { background: var(--blue-light); }
+    .nav-bar button:disabled { background: var(--grey-mid); cursor: default; }
+
+    .slide-counter {
+      color: var(--blue-pale);
+      font-size: 14px;
+      font-weight: 700;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .dot-nav {
+      display: flex; gap: 8px;
+    }
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--grey-mid);
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+    .dot.active { background: var(--accent); transform: scale(1.3); }
+
+    /* ══════════════════════════════════════
+       SLIDE 1 – TITLE
+    ══════════════════════════════════════ */
+    #slide-1 {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 60%, var(--blue-light) 100%);
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 60px 80px;
+    }
+    #slide-1 .badge {
+      background: rgba(255,255,255,.15);
+      color: var(--blue-pale);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 20px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      border: 1px solid rgba(255,255,255,.25);
+    }
+    #slide-1 h1 {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: clamp(28px, 5vw, 56px);
+      color: var(--white);
+      line-height: 1.15;
+      max-width: 820px;
+      text-shadow: 0 2px 12px rgba(0,0,0,.35);
+      margin-bottom: 24px;
+    }
+    #slide-1 h1 span { color: var(--accent); }
+    #slide-1 .subtitle {
+      font-size: 18px;
+      color: var(--blue-pale);
+      margin-bottom: 40px;
+    }
+    #slide-1 .icon-row {
+      display: flex; gap: 28px; justify-content: center; margin-bottom: 44px;
+    }
+    #slide-1 .icon-box {
+      width: 80px; height: 80px;
+      background: rgba(255,255,255,.12);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+    }
+    #slide-1 .meta {
+      display: flex; gap: 32px; justify-content: center;
+      flex-wrap: wrap;
+    }
+    #slide-1 .meta-item {
+      color: rgba(255,255,255,.75);
+      font-size: 14px;
+    }
+    #slide-1 .meta-item strong { color: var(--white); }
+
+    /* ══════════════════════════════════════
+       SLIDE 2 – INTRODUCTION
+    ══════════════════════════════════════ */
+    #slide-2 {
+      background: var(--white);
+      padding: 0 0 56px 0;
+    }
+    .slide-header-strip {
+      background: linear-gradient(90deg, var(--blue-dark), var(--blue-mid));
+      padding: 22px 48px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .slide-header-strip .slide-num {
+      background: rgba(255,255,255,.2);
+      color: var(--white);
+      font-size: 13px; font-weight: 700;
+      padding: 4px 12px; border-radius: 12px;
+      white-space: nowrap;
+    }
+    .slide-header-strip h2 {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: clamp(20px, 3vw, 32px);
+      color: var(--white);
+    }
+
+    .slide-body {
+      flex: 1;
+      padding: 32px 48px;
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      overflow: hidden;
+    }
+
+    .info-card {
+      flex: 1;
+      background: var(--blue-pale);
+      border-left: 5px solid var(--blue-mid);
+      border-radius: 10px;
+      padding: 22px 26px;
+    }
+    .info-card h3 {
+      font-size: 16px; font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .info-card p {
+      font-size: 15px;
+      color: var(--grey-dark);
+      line-height: 1.7;
+    }
+
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .bullet-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--grey-dark);
+      line-height: 1.5;
+      background: var(--grey-light);
+      padding: 12px 16px;
+      border-radius: 8px;
+    }
+    .bullet-list li .icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .bullet-list li strong { color: var(--blue-dark); }
+
+    .visual-panel {
+      width: 260px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+    .visual-panel .img-frame {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 3px solid var(--blue-pale);
+      background: var(--grey-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 160px;
+    }
+    .visual-panel .img-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .visual-panel .img-caption {
+      font-size: 12px;
+      color: var(--grey-mid);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ══════════════════════════════════════
+       SLIDE 3 – CLASSIFICATION
+    ══════════════════════════════════════ */
+    #slide-3 {
+      background: var(--grey-light);
+      padding: 0 0 56px 0;
+    }
+    #slide-3 .slide-body { flex-direction: column; }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      width: 100%;
+    }
+    .cat-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 20px 18px;
+      border-top: 5px solid var(--blue-mid);
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .cat-card .cat-icon { font-size: 32px; margin-bottom: 10px; }
+    .cat-card h4 {
+      font-size: 15px; font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: 8px;
+    }
+    .cat-card ul {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .cat-card ul li {
+      font-size: 13px;
+      color: var(--grey-dark);
+      padding-left: 14px;
+      position: relative;
+    }
+    .cat-card ul li::before {
+      content: '›';
+      position: absolute; left: 0;
+      color: var(--blue-light);
+      font-weight: 700;
+    }
+
+    /* ══════════════════════════════════════
+       SLIDE 4 – EXAMPLES
+    ══════════════════════════════════════ */
+    #slide-4 {
+      background: var(--white);
+      padding: 0 0 56px 0;
+    }
+    .instrument-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      width: 100%;
+    }
+    .inst-card {
+      background: var(--blue-pale);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      border: 2px solid transparent;
+      transition: border-color .2s;
+    }
+    .inst-card:hover { border-color: var(--blue-mid); }
+    .inst-card .inst-icon { font-size: 38px; margin-bottom: 8px; }
+    .inst-card h4 {
+      font-size: 14px; font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: 6px;
+    }
+    .inst-card p { font-size: 12px; color: var(--grey-mid); line-height: 1.4; }
+
+    /* ══════════════════════════════════════
+       SLIDE 5 – ADVANTAGES
+    ══════════════════════════════════════ */
+    #slide-5 {
+      background: linear-gradient(160deg, #f0f7ff 0%, var(--white) 60%);
+      padding: 0 0 56px 0;
+    }
+    .adv-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      width: 100%;
+    }
+    .adv-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--white);
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 2px 8px rgba(37,99,176,.08);
+      border-left: 4px solid var(--blue-mid);
+    }
+    .adv-item .adv-icon { font-size: 28px; flex-shrink: 0; }
+    .adv-item h4 { font-size: 14px; font-weight: 700; color: var(--blue-dark); margin-bottom: 4px; }
+    .adv-item p { font-size: 13px; color: var(--grey-mid); line-height: 1.4; }
+
+    /* ══════════════════════════════════════
+       SLIDE 6 – USAGE RULES
+    ══════════════════════════════════════ */
+    #slide-6 {
+      background: var(--grey-light);
+      padding: 0 0 56px 0;
+    }
+    .rule-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+    .rule-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--white);
+      border-radius: 10px;
+      padding: 14px 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    }
+    .rule-num {
+      width: 36px; height: 36px;
+      background: var(--blue-mid);
+      color: var(--white);
+      font-size: 16px; font-weight: 900;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .rule-item span { font-size: 14px; color: var(--grey-dark); line-height: 1.4; }
+    .rule-item span strong { color: var(--blue-dark); }
+
+    /* ══════════════════════════════════════
+       SLIDE 7 – SAFETY RULES
+    ══════════════════════════════════════ */
+    #slide-7 {
+      background: #fff7ed;
+      padding: 0 0 56px 0;
+    }
+    #slide-7 .slide-header-strip {
+      background: linear-gradient(90deg, #b45309, #d97706);
+    }
+    .safety-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      width: 100%;
+    }
+    .safety-card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--white);
+      border-radius: 10px;
+      padding: 14px 16px;
+      border-left: 4px solid #d97706;
+      box-shadow: 0 2px 6px rgba(0,0,0,.06);
+    }
+    .safety-card .s-icon { font-size: 26px; flex-shrink: 0; }
+    .safety-card h4 { font-size: 14px; font-weight: 700; color: #92400e; margin-bottom: 4px; }
+    .safety-card p { font-size: 13px; color: var(--grey-dark); line-height: 1.4; }
+    .safety-warning {
+      background: #fef3c7;
+      border: 2px solid #f59e0b;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 14px;
+      color: #78350f;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    /* ══════════════════════════════════════
+       SLIDE 8 – CONCLUSION
+    ══════════════════════════════════════ */
+    #slide-8 {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, #0f2d5e 100%);
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 60px 80px;
+    }
+    #slide-8 .concl-icon { font-size: 64px; margin-bottom: 20px; }
+    #slide-8 h2 {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: clamp(22px, 3.5vw, 40px);
+      color: var(--white);
+      margin-bottom: 28px;
+    }
+    #slide-8 h2 span { color: var(--accent); }
+    .concl-points {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+      max-width: 900px;
+    }
+    .concl-point {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 10px;
+      padding: 14px 20px;
+      color: var(--white);
+      font-size: 14px;
+      max-width: 220px;
+      line-height: 1.5;
+    }
+    .concl-point .cp-icon { font-size: 22px; margin-bottom: 6px; }
+    #slide-8 .outro {
+      font-size: 16px;
+      color: var(--blue-pale);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 700px) {
+      .category-grid, .instrument-grid, .adv-grid, .safety-grid { grid-template-columns: 1fr 1fr; }
+      .slide-body { padding: 20px 18px; gap: 16px; }
+      .slide-header-strip { padding: 16px 18px; }
+      .visual-panel { width: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="slides-wrapper">
+
+  <!-- ═══════════════════════════════════════ SLIDE 1 ═══ -->
+  <div class="slide active" id="slide-1">
+    <div class="badge">Fizică & Tehnologie · Clasa a XI-a</div>
+    <div class="icon-row">
+      <div class="icon-box">📏</div>
+      <div class="icon-box">🔬</div>
+      <div class="icon-box">💡</div>
+    </div>
+    <h1>Instrumente de <span>măsurat digitale</span><br>și reguli de utilizare</h1>
+    <p class="subtitle">O prezentare despre tehnologia modernă de măsurare</p>
+    <div class="meta">
+      <span class="meta-item">👤 <strong>Clasa a XI-a</strong></span>
+      <span class="meta-item">📚 <strong>Fizică aplicată</strong></span>
+      <span class="meta-item">🗓 <strong>2024–2025</strong></span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ SLIDE 2 ═══ -->
+  <div class="slide" id="slide-2">
+    <div class="slide-header-strip">
+      <span class="slide-num">02 / 08</span>
+      <h2>Ce sunt instrumentele de măsurat digitale?</h2>
+    </div>
+    <div class="slide-body">
+      <div style="flex:1; display:flex; flex-direction:column; gap:16px;">
+        <div class="info-card">
+          <h3>Definiție</h3>
+          <p>Instrumentele de măsurat digitale sunt dispozitive electronice care <strong>afișează valorile măsurate</strong> pe un ecran digital (LCD/LED), în loc să utilizeze un ac indicator pe o scară analogică.</p>
+        </div>
+        <ul class="bullet-list">
+          <li><span class="icon">📡</span><div><strong>Senzori electronici</strong> – transformă mărimea fizică în semnal electric</div></li>
+          <li><span class="icon">🔢</span><div><strong>Convertor analog-digital (ADC)</strong> – transformă semnalul în valoare numerică</div></li>
+          <li><span class="icon">🖥</span><div><strong>Afișaj numeric</strong> – prezintă rezultatul clar, fără erori de citire</div></li>
+          <li><span class="icon">📈</span><div><strong>Precizie ridicată</strong> – erori mult mai mici față de instrumentele analogice</div></li>
+        </ul>
+      </div>
+      <div class="visual-panel">
+        <div class="img-frame" style="min-height:200px; background:linear-gradient(135deg,#dbeafe,#bfdbfe);">
+          <span style="font-size:80px;">🔌</span>
+        </div>
+        <p class="img-caption">Multimetru digital — cel mai utilizat instrument de măsurare</p>
+        <div class="img-frame" style="min-height:120px; background:linear-gradient(135deg,#dbeafe,#ede9fe);">
+          <span style="font-size:60px;">📟</span>
+        </div>
+        <p class="img-caption">Osciloscop digital portabil</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ SLIDE 3 ═══ -->
+  <div class="slide" id="slide-3">
+    <div class="slide-header-strip">
+      <span class="slide-num">03 / 08</span>
+      <h2>Clasificarea instrumentelor de măsurat digitale</h2>
+    </div>
+    <div class="slide-body">
+      <div class="category-grid">
+        <div class="cat-card">
+          <div class="cat-icon">⚡</div>
+          <h4>Mărimi electrice</h4>
+          <ul>
+            <li>Tensiune (voltmetru)</li>
+            <li>Curent (ampermetru)</li>
+            <li>Rezistență (ohmetru)</li>
+            <li>Frecvență (frecvențmetru)</li>
+          </ul>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon">🌡</div>
+          <h4>Mărimi termice</h4>
+          <ul>
+            <li>Temperatură (termometru)</li>
+            <li>Umiditate (higrometru)</li>
+            <li>Presiune (barometru)</li>
+            <li>Flux termic</li>
+          </ul>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon">📏</div>
+          <h4>Mărimi mecanice</h4>
+          <ul>
+            <li>Lungime (șubler digital)</li>
+            <li>Masă (cântar digital)</li>
+            <li>Forță (dinamometru)</li>
+            <li>Viteză (tahometru)</li>
+          </ul>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon">🔊</div>
+          <h4>Mărimi acustice</h4>
+          <ul>
+            <li>Nivel sonor (sonometru)</li>
+            <li>Frecvență audio</li>
+            <li>Amplitudine</li>
+          </ul>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon">☀</div>
+          <h4>Mărimi optice</h4>
+          <ul>
+            <li>Intensitate luminoasă (luxmetru)</li>
+            <li>Culoare (colorimetru)</li>
+            <li>Radiație UV/IR</li>
+          </ul>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon">🌐</div>
+          <h4>Instrumente complexe</h4>
+          <ul>
+            <li>Multimetru digital</li>
+            <li>Osciloscop digital</li>
+            <li>Analizor de spectru</li>
+            <li>Senzori IoT</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ SLIDE 4 ═══ -->
+  <div class="slide" id="slide-4">
+    <div class="slide-header-strip">
+      <span class="slide-num">04 / 08</span>
+      <h2>Exemple de instrumente digitale des utilizate</h2>
+    </div>
+    <div class="slide-body" style="flex-direction:column;">
+      <div class="instrument-grid">
+        <div class="inst-card">
+          <div class="inst-icon">🔌</div>
+          <h4>Multimetru digital</h4>
+          <p>Măsoară tensiune, curent și rezistență. Folosit în laboratoare și service electronic.</p>
+        </div>
+        <div class="inst-card">
+          <div class="inst-icon">📟</div>
+          <h4>Osciloscop digital</h4>
+          <p>Vizualizează forme de undă ale semnalelor electrice în timp real.</p>
+        </div>
+        <div class="inst-card">
+          <div class="inst-icon">🌡</div>
+          <h4>Termometru digital</h4>
+          <p>Măsoară temperatura cu precizie de 0,1 °C. Utilizat în medicină și industrie.</p>
+        </div>
+        <div class="inst-card">
+          <div class="inst-icon">📐</div>
+          <h4>Șubler digital</h4>
+          <p>Măsoară dimensiuni cu precizie de 0,01 mm. Utilizat în mecanică și construcții.</p>
+        </div>
+        <div class="inst-card">
+          <div class="inst-icon">⚖</div>
+          <h4>Cântar digital</h4>
+          <p>Determină masa obiectelor cu mare precizie. Disponibil de la bijuterii la marfă.</p>
+        </div>
+        <div class="inst-card">
+          <div class="inst-icon">☁</div>
+          <h4>Stație meteo digitală</h4>
+          <p>Monitorizează temperatură, umiditate, presiune și viteza vântului.</p>
+        </div>
+        <div class="inst-card">
+          <div class="inst-icon">🔋</div>
+          <h4>Tester baterie</h4>
+          <p>Verifică starea bateriilor și acumulatoarelor, indicând capacitatea rămasă.</p>
+        </div>
+        <div class="inst-card">
+          <div class="inst-icon">📡</div>
+          <h4>Senzor ultrasonor</h4>
+          <p>Măsoară distanțe și niveluri de lichid, fără contact direct cu obiectul.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ SLIDE 5 ═══ -->
+  <div class="slide" id="slide-5">
+    <div class="slide-header-strip">
+      <span class="slide-num">05 / 08</span>
+      <h2>Avantajele instrumentelor digitale față de cele analogice</h2>
+    </div>
+    <div class="slide-body" style="flex-direction:column;">
+      <div class="adv-grid">
+        <div class="adv-item">
+          <span class="adv-icon">🎯</span>
+          <div>
+            <h4>Precizie ridicată</h4>
+            <p>Afișează valori cu mai multe zecimale; eroarea de citire este eliminată.</p>
+          </div>
+        </div>
+        <div class="adv-item">
+          <span class="adv-icon">👁</span>
+          <div>
+            <h4>Citire ușoară</h4>
+            <p>Valoarea apare direct pe ecran – nu mai este nevoie de interpretarea unui ac pe scală.</p>
+          </div>
+        </div>
+        <div class="adv-item">
+          <span class="adv-icon">💾</span>
+          <div>
+            <h4>Memorie și înregistrare</h4>
+            <p>Multe modele pot salva, compara sau transmite datele pe calculator sau telefon.</p>
+          </div>
+        </div>
+        <div class="adv-item">
+          <span class="adv-icon">🔄</span>
+          <div>
+            <h4>Calibrare automată</h4>
+            <p>Se recalibrează singure la pornire; nu necesită ajustare manuală constantă.</p>
+          </div>
+        </div>
+        <div class="adv-item">
+          <span class="adv-icon">🔋</span>
+          <div>
+            <h4>Consum redus de energie</h4>
+            <p>Circuitele CMOS moderne consumă extrem de puțin, mărind durata de viață a bateriei.</p>
+          </div>
+        </div>
+        <div class="adv-item">
+          <span class="adv-icon">🛡</span>
+          <div>
+            <h4>Protecție contra suprasarcinii</h4>
+            <p>Detectează automat valorile periculoase și se deconectează pentru a evita defecțiunile.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ SLIDE 6 ═══ -->
+  <div class="slide" id="slide-6">
+    <div class="slide-header-strip">
+      <span class="slide-num">06 / 08</span>
+      <h2>Reguli de utilizare a instrumentelor digitale</h2>
+    </div>
+    <div class="slide-body" style="flex-direction:column;">
+      <div class="rule-list">
+        <div class="rule-item">
+          <span class="rule-num">1</span>
+          <span><strong>Citește manualul de utilizare</strong> înainte de prima utilizare; fiecare instrument are specificații și limite proprii.</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">2</span>
+          <span><strong>Verifică starea bateriei</strong> – un instrument cu baterie descărcată poate afișa valori incorecte.</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">3</span>
+          <span><strong>Selectează corect domeniul de măsurare</strong> (range) corespunzător valorii estimate, pentru a nu deteriora instrumentul.</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">4</span>
+          <span><strong>Conectează sondele/senzorul corect</strong> – respectă polaritatea și ordinea bornelor indicate (COM, V, A).</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">5</span>
+          <span><strong>Așteaptă stabilizarea afișajului</strong> înainte de a citi valoarea; unele instrumente au un timp de răspuns.</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">6</span>
+          <span><strong>Curăță și depozitează corect</strong> instrumentul după utilizare, ferit de umiditate, căldură sau șocuri mecanice.</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">7</span>
+          <span><strong>Efectuează calibrarea periodică</strong> conform recomandărilor producătorului pentru a menține precizia.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ SLIDE 7 ═══ -->
+  <div class="slide" id="slide-7">
+    <div class="slide-header-strip">
+      <span class="slide-num">07 / 08</span>
+      <h2>Reguli de siguranță în utilizare</h2>
+    </div>
+    <div class="slide-body" style="flex-direction:column; gap:14px;">
+      <div class="safety-grid">
+        <div class="safety-card">
+          <span class="s-icon">⚠</span>
+          <div>
+            <h4>Nu depăși tensiunea maximă admisă</h4>
+            <p>Verifică întotdeauna valoarea maximă de intrare (ex. 600 V CAT III) înainte de măsurare.</p>
+          </div>
+        </div>
+        <div class="safety-card">
+          <span class="s-icon">🧤</span>
+          <div>
+            <h4>Echipament de protecție</h4>
+            <p>La tensiuni periculoase (>50 V AC / >120 V DC) folosește mănuși izolate și ochelari de protecție.</p>
+          </div>
+        </div>
+        <div class="safety-card">
+          <span class="s-icon">🔌</span>
+          <div>
+            <h4>Verifică sondele și cablurile</h4>
+            <p>Nu utiliza sonde cu izolație deteriorată sau crăpată – risc de electrocutare.</p>
+          </div>
+        </div>
+        <div class="safety-card">
+          <span class="s-icon">🚫</span>
+          <div>
+            <h4>Nu măsura tensiune în modul curent</h4>
+            <p>Comutarea greșită pe modul ampermetru la o priză cauzează scurtcircuit și deteriorarea instrumentului.</p>
+          </div>
+        </div>
+        <div class="safety-card">
+          <span class="s-icon">💧</span>
+          <div>
+            <h4>Ferește de umiditate și lichide</h4>
+            <p>Aparatele fără protecție IP nu se utilizează în medii umede sau ploioase.</p>
+          </div>
+        </div>
+        <div class="safety-card">
+          <span class="s-icon">👶</span>
+          <div>
+            <h4>Supraveghere pentru elevi</h4>
+            <p>Experimentele cu tensiuni periculoase se efectuează numai în prezența profesorului sau unui specialist.</p>
+          </div>
+        </div>
+      </div>
+      <div class="safety-warning">
+        ⚡ <strong>Important:</strong> Orice accident de natură electrică trebuie raportat imediat profesorului sau responsabilului de laborator!
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ SLIDE 8 ═══ -->
+  <div class="slide" id="slide-8">
+    <div class="concl-icon">🏆</div>
+    <h2>Concluzie: <span>Tehnologia digitală</span> în slujba preciziei</h2>
+    <div class="concl-points">
+      <div class="concl-point">
+        <div class="cp-icon">🔢</div>
+        Instrumentele digitale oferă <strong>precizie și claritate</strong> superioară în orice domeniu.
+      </div>
+      <div class="concl-point">
+        <div class="cp-icon">📚</div>
+        Cunoașterea <strong>regulilor de utilizare</strong> garantează rezultate corecte și durabilitate.
+      </div>
+      <div class="concl-point">
+        <div class="cp-icon">🛡</div>
+        Respectarea <strong>normelor de siguranță</strong> protejează utilizatorul și echipamentul.
+      </div>
+      <div class="concl-point">
+        <div class="cp-icon">🌐</div>
+        Tehnologia digitală este <strong>prezentul și viitorul</strong> măsurătorilor în știință și industrie.
+      </div>
+    </div>
+    <p class="outro">Stăpânind aceste instrumente vei fi pregătit atât pentru examenele școlare, cât și pentru cariera în domenii tehnice, medicale sau științifice.</p>
+  </div>
+
+</div><!-- /.slides-wrapper -->
+
+<!-- ── Navigation Bar ── -->
+<div class="nav-bar">
+  <button id="btn-prev" onclick="changeSlide(-1)" disabled>◀ Înapoi</button>
+  <div class="dot-nav" id="dot-nav"></div>
+  <span class="slide-counter" id="slide-counter">1 / 8</span>
+  <button id="btn-next" onclick="changeSlide(1)">Înainte ▶</button>
+</div>
+
+<script>
+  const totalSlides = 8;
+  let current = 1;
+
+  const dotNav = document.getElementById('dot-nav');
+  for (let i = 1; i <= totalSlides; i++) {
+    const d = document.createElement('span');
+    d.className = 'dot' + (i === 1 ? ' active' : '');
+    d.dataset.slide = i;
+    d.addEventListener('click', () => goToSlide(i));
+    dotNav.appendChild(d);
+  }
+
+  function goToSlide(n) {
+    document.getElementById('slide-' + current).classList.remove('active');
+    document.querySelectorAll('.dot')[current - 1].classList.remove('active');
+    current = n;
+    document.getElementById('slide-' + current).classList.add('active');
+    document.querySelectorAll('.dot')[current - 1].classList.add('active');
+    document.getElementById('slide-counter').textContent = current + ' / ' + totalSlides;
+    document.getElementById('btn-prev').disabled = current === 1;
+    document.getElementById('btn-next').disabled = current === totalSlides;
+  }
+
+  function changeSlide(dir) {
+    const next = current + dir;
+    if (next >= 1 && next <= totalSlides) goToSlide(next);
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   changeSlide(-1);
+  });
+</script>
+</body>
+</html>
